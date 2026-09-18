@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html>
+<head>
+
+    <title>4-Bit Stuck-at Fault Simulator</title>
+
+    <link rel="stylesheet"
+          href="{{ url_for('static', filename='style.css') }}">
+
+</head>
+
+<body>
+
+<div class="container">
+
+    <h1>4-BIT STUCK-AT FAULT SIMULATOR</h1>
+
+    <p class="subtitle">
+        4-Bit Ripple Carry Adder
+    </p>
+
+
+    <div class="card">
+
+        <h2>Fault Configuration</h2>
+
+        <form method="POST">
+
+            <label>Fault Wire</label>
+
+            <select name="fault_wire">
+
+                <option value="S0">S0 - Sum Bit 0</option>
+                <option value="S1">S1 - Sum Bit 1</option>
+                <option value="S2">S2 - Sum Bit 2</option>
+                <option value="S3">S3 - Sum Bit 3</option>
+
+                <option value="C1">C1 - Carry 1</option>
+                <option value="C2">C2 - Carry 2</option>
+                <option value="C3">C3 - Carry 3</option>
+                <option value="C4">C4 - Final Carry</option>
+
+            </select>
+
+
+            <label>Fault Type</label>
+
+            <select name="stuck_value">
+
+                <option value="0">
+                    Stuck-at-0
+                </option>
+
+                <option value="1">
+                    Stuck-at-1
+                </option>
+
+            </select>
+
+
+            <button type="submit">
+                RUN SIMULATION
+            </button>
+
+        </form>
+
+    </div>
+
+
+    {% if fault_wire %}
+
+    <div class="result-card">
+
+        <h2>Simulation Results</h2>
+
+        <p>
+            <b>Fault Wire:</b>
+            {{ fault_wire }}
+        </p>
+
+        <p>
+            <b>Fault Type:</b>
+            Stuck-at-{{ stuck_value }}
+        </p>
+
+        <p>
+            <b>Detected Test Vectors:</b>
+            {{ total }}
+        </p>
+
+
+        {% if results %}
+
+        <table>
+
+            <tr>
+
+                <th>A</th>
+                <th>B</th>
+                <th>Normal Output</th>
+                <th>Faulty Output</th>
+
+            </tr>
+
+
+            {% for row in results %}
+
+            <tr>
+
+                <td>{{ row.A }}</td>
+
+                <td>{{ row.B }}</td>
+
+                <td>{{ row.normal }}</td>
+
+                <td>{{ row.faulty }}</td>
+
+            </tr>
+
+            {% endfor %}
+
+        </table>
+
+        {% else %}
+
+        <p class="no-result">
+            No test vector detects this fault.
+        </p>
+
+        {% endif %}
+
+    </div>
+
+    {% endif %}
+
+</div>
+
+</body>
+</html>
